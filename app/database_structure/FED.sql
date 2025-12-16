@@ -1,9 +1,10 @@
-DROP DATABASE IF EXISTS `FED`;
-CREATE DATABASE IF NOT EXISTS `FED` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+-- Database structure for FED application
+-- This file is loaded automatically by Docker on container initialization
 
-USE `FED`;
-
+DROP TABLE IF EXISTS `tasks`;
 DROP TABLE IF EXISTS `authorized_themes`;
+DROP TABLE IF EXISTS `themes`;
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `authorized_themes` (
                                      `authorized_theme_id` int(11) NOT NULL,
                                      `theme_id` int(11) NOT NULL,
