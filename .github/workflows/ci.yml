@@ -1,0 +1,42 @@
+---
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  php-lint:
+    name: PHP Syntax Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+
+      - name: Check PHP syntax
+        run: |
+          echo "Checking PHP syntax for all PHP files..."
+          ERROR_COUNT=0
+          while IFS= read -r file; do
+            if ! php -l "$file" > /dev/null 2>&1; then
+              echo "✗ Syntax error in: $file"
+              php -l "$file"
+              ERROR_COUNT=$((ERROR_COUNT + 1))
+            fi
+          done < <(find . -name "*.php" -not -path "./vendor/*")
+
+          if [ $ERROR_COUNT -eq 0 ]; then
+            echo "✓ All PHP files have valid syntax"
+            exit 0
+          else
+            echo "✗ Found $ERROR_COUNT file(s) with syntax errors"
+            exit 1
+          fi
