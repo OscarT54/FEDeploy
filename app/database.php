@@ -5,13 +5,13 @@ class Database
 {
     private function sql_connect()
     {
-        global $db;
-        global $pt;
-        global $ue;
-        global $pd;
+        $db = DB_NAME;
+        $pt = DB_PORT;
+        $ue = DB_USER;
+        $pd = DB_PASS;
 
         try {
-            $sch = 'mysql:host=localhost;dbname=' . $db . ';port=' . $pt;
+            $sch = 'mysql:host=' . DB_HOST . ';dbname=' . $db . ';port=' . $pt;
             $bdd = new PDO($sch, $ue, $pd);
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());

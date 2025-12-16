@@ -1,5 +1,3 @@
-<!doctype html>
-<html lang="fr">
 <?php
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
@@ -39,7 +37,8 @@ if (!isset($_SESSION["login"])) {
 
 $login = $_SESSION["login"];
 ?>
-<head>
+<!doctype html>
+<html lang="fr">
     <meta charset="UTF-8">
     <title>FED | To-do list</title>
     <link rel="stylesheet" href="style/style.css">

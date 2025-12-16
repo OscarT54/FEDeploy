@@ -1,0 +1,13 @@
+# mariadb
+FROM mariadb:10.5
+
+# Mount ./app/database_structure/FED.sql
+COPY ./app/database_structure/FED.sql /docker-entrypoint-initdb.d/
+
+# Secure the MariaDB installation by setting root password and creating a database and user, change root user fed to 
+# '%' to allow remote connections
+
+EXPOSE 3306
+# The database will be initialized with the FED.sql script on the first run
+CMD ["mysqld"]
+# End of Dockerfile-db
