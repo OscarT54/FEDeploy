@@ -1,0 +1,17 @@
+name: Lint + Execute
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: js
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Run lint
+      run: |
+        find . -type f -name '*.php' -exec php -l {} \
