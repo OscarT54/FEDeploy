@@ -1,4 +1,3 @@
----
 name: CI
 
 on:
@@ -31,7 +30,7 @@ jobs:
               php -l "$file"
               ERROR_COUNT=$((ERROR_COUNT + 1))
             fi
-          done < <(find . -name "*.php" -not -path "./vendor/*")
+          done < <(find . -name "*.php" -not -path "*/vendor/*")
 
           if [ $ERROR_COUNT -eq 0 ]; then
             echo "✓ All PHP files have valid syntax"
