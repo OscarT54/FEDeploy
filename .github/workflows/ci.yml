@@ -23,14 +23,26 @@ jobs:
       - name: Check PHP syntax
         run: |
           echo "Checking PHP syntax for all PHP files..."
+          FILES=$(find . -name "*.php" -not -path "*/vendor/*" -not -path "./.git/*")
+
+          if [ -z "$FILES" ]; then
+            echo "⚠ No PHP files found to check"
+            exit 0
+          fi
+
+          FILE_COUNT=$(echo "$FILES" | wc -l)
+          echo "Found $FILE_COUNT PHP file(s) to check"
+
           ERROR_COUNT=0
           while IFS= read -r file; do
-            if ! php -l "$file" > /dev/null 2>&1; then
-              echo "✗ Syntax error in: $file"
-              php -l "$file"
-              ERROR_COUNT=$((ERROR_COUNT + 1))
+            if [ -n "$file" ]; then
+              if ! php -l "$file" > /dev/null 2>&1; then
+                echo "✗ Syntax error in: $file"
+                php -l "$file"
+                ERROR_COUNT=$((ERROR_COUNT + 1))
+              fi
             fi
-          done < <(find . -name "*.php" -not -path "*/vendor/*")
+          done <<< "$FILES"
 
           if [ $ERROR_COUNT -eq 0 ]; then
             echo "✓ All PHP files have valid syntax"
